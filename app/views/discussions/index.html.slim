@@ -1,0 +1,36 @@
+h1= @project.title
+h5= @project.description
+h5= @project.due_date.to_date 
+
+hr
+
+h4 New Discussion
+- if @discussion.errors.any?
+  ul
+    - @discussion.errors.full_messages.each do |msg|
+      li= msg
+
+= form_for [@project, @discussion] do |f|
+  .form-group
+    = f.label :title, "Discussion Title"
+    = f.text_field :title, class: "form-control"
+    = f.label :description, "Discussion Description"
+    = f.text_area :description, class: "form-control"
+  = f.submit class: "btn btn-primary"
+
+h4 Discussions
+- @project.discussions.each do |discussion|
+  .well
+    h5= discussion.title
+    p= discussion.description
+    = link_to "Discuss", [@project, discussion], class: "btn btn-primary"
+    |  
+    = link_to "delete", [@project, discussion], method: :delete, data: {confirm: "Are you sure? This deletes the posts, too."}
+    
+
+
+
+
+
+
+

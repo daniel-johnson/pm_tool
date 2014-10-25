@@ -1,0 +1,23 @@
+<% if @task.errors.any? %>
+  <ul>
+    <% @task.errors.full_tasks.each do |task| %>
+      <li><%= task %></li>
+    <% end %>
+  </ul>
+<% end %>
+<div class="row">
+  <div class="col-md-6">
+    <%= form_for @task do |f| %>
+      <div class="form-group">
+        <label>Task</label>
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <label>Due Date</label>
+        <%= f.datetime_select :due_date, class: "form-control" %>
+      </div>
+      <%= f.submit class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

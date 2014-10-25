@@ -1,0 +1,4 @@
+<h1><%= @task.title %></h1>
+<p>Due Date: <%= @task.due_date.to_date %></p>
+<%= link_to "Edit", edit_task_path(@task) %>
+<%= link_to "Delete", @task, method: :delete, data: {confirm: "Are you sure?"} %>

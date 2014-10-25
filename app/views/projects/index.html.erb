@@ -1,0 +1,14 @@
+<div class="container-fluid"> 
+  <div class="container col-md-8 col-md-offset-2">
+    <h1>Listing all Projects</h1>
+
+    <br>
+
+    <% @projects.each do |project| %>
+      <h3><%= link_to project.title, project %></h3>
+      <p><%= project.description.to_s.truncate(100) %></p>
+      <p>Due Date - <%= project.due_date.to_date %></p>
+      <hr>
+    <% end %>
+  </div>
+</div>  

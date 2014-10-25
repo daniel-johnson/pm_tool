@@ -1,7 +1,19 @@
 Rails.application.routes.draw do
+
   get '/' => "home#home"
 
   get '/about' => "home#about"
+
+  resources :projects do
+    resources :discussions, only: [:create, :destroy, :index, :show, :edit] do
+  end
+
+  resources :comments, only: [:create, :destroy, :edit]
+
+
+  resources :tasks
+
+  root "projects#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

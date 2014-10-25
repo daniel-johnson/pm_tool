@@ -1,0 +1,21 @@
+h1= @project.title
+h4= @project.description
+
+br
+
+h3= @discussion.title
+h5= @discussion.description
+
+= form_for [@discussion, @comment] do |f|
+  .form-group
+    = f.label :body, "Comment"
+    = f.text_area :body, class: "form-control"
+  = f.submit class: "btn btn-primary"
+
+/ h4 Comments
+
+/ - @discussion.comments.each do |comment|
+/   .well
+/     p= comment.body
+/     = link_to "Edit", [@discussion, comment], 
+/     = link_to "Delete", [@discussion, comment], method: :delete
