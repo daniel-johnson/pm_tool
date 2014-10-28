@@ -1,0 +1,44 @@
+
+.container
+  h1= @project.title
+  p= @project.description
+  = link_to "Edit", edit_project_path(@project)
+  |  | 
+  = link_to "Delete", @project, method: :delete, data: {confirm: "Are you sure?"}
+  |  | 
+  = link_to "Discuss this project", project_discussions_path(@project)
+
+  hr
+
+  - @project.tasks.each do |task|
+    .row
+      .col-md-8.col-md-offset-1
+        h4= task.title
+          h5= task.due_date
+      .col-md-3
+        .row
+          .col-md-6
+            - if task.done?
+              = button_to "Complete", task_path(task, task: { done: false}) , class: "btn btn-default btn-sm", method: :patch
+            - else
+              = button_to "In Progress", task_path(task, task: { done: true} ) , class: "btn btn-primary btn-sm", method: :patch
+          .col-md-6
+            = link_to fa_icon("trash"), task, method: :delete, class: "btn btn-default btn-sm"
+    hr
+
+  h4 New Task
+  - if @task.errors.any?
+    ul
+      - @task.errors.full_messages.each do |msg|
+        li= msg
+
+  .container.col-md-6
+    = form_for [@project, @task] do |f|
+      .form-group
+        = f.label :title, "Task Description"
+        = f.text_field :title, class: "form-control"
+        br
+        = f.label :due_date, "Task due date"
+        |  
+        = f.datetime_select :due_date, class: "form-control"
+      = f.submit class: "btn btn-primary"

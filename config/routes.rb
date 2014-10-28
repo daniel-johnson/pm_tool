@@ -5,13 +5,18 @@ Rails.application.routes.draw do
   get '/about' => "home#about"
 
   resources :projects do
-    resources :discussions, only: [:create, :destroy, :index, :show, :edit] do
+    resources :discussions, only: [:new, :create, :index]
+    resources :tasks, only: [:new, :create]
   end
 
-  resources :comments, only: [:create, :destroy, :edit]
+  resources :discussions, only: [:show, :destroy, :update, :edit] do
+    resources :comments, only: [:create]
+  end
 
+  resources :comments, only: [:edit, :update, :destroy]
 
-  resources :tasks
+  resources :tasks, only: [:edit, :update, :destroy]
+
 
   root "projects#index"
 

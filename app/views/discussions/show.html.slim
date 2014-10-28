@@ -1,21 +1,38 @@
-h1= @project.title
-h4= @project.description
+  
+.container
+  h1= link_to @project.title, @project
+  h4= @project.description
+  
 
-br
+  br
 
-h3= @discussion.title
-h5= @discussion.description
+  h3= @discussion.title
+  h5= @discussion.description
+  = link_to "Edit", edit_discussion_path(@discussion)
+  |  | 
+  = link_to "Delete", @discussion, method: :delete, data: {confirm: "Are you sure?"}
 
-= form_for [@discussion, @comment] do |f|
-  .form-group
-    = f.label :body, "Comment"
-    = f.text_area :body, class: "form-control"
-  = f.submit class: "btn btn-primary"
+  br
 
-/ h4 Comments
+  - if @comment.errors.any?
+  ul
+    - @comment.errors.full_messages.each do |msg|
+      li= msg
+  
+  
 
-/ - @discussion.comments.each do |comment|
-/   .well
-/     p= comment.body
-/     = link_to "Edit", [@discussion, comment], 
-/     = link_to "Delete", [@discussion, comment], method: :delete
+  h4 Comments
+
+  - @discussion.comments.each do |comment|
+    .well
+      p= comment.body
+      = link_to "Edit", edit_comment_path(comment)
+      |  | 
+      = link_to "Delete", comment, method: :delete
+
+  .container.col-md-6
+    = form_for [@discussion, @comment] do |f|
+      .form-group
+        = f.label :body, "Comment"
+        = f.text_area :body, class: "form-control"
+      = f.submit class: "btn btn-primary"

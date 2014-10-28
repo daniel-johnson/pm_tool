@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 
 group :development do
+  gem 'hirb'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'

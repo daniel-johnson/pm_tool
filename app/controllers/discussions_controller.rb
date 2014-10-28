@@ -11,7 +11,7 @@ class DiscussionsController < ApplicationController
     @discussion.project = @project
 
     if @discussion.save
-      redirect_to project_discussions_path(@project), notice: "Discussion created"
+      redirect_to @project, notice: "Discussion created"
     else
       render "discussions/index"
     end
@@ -22,19 +22,20 @@ class DiscussionsController < ApplicationController
 
 
   def destroy
-    @project = Project.find params[:project_id]
     @discussion = Discussion.find params[:id]
+    @project = Project.find @discussion.project_id
     if @discussion.destroy
-      redirect_to project_discussions_path(@project), notice: "Discussion deleted"
+      redirect_to @project, notice: "Discussion deleted"
     else
-      redirect_to project_discussions_path(@project), alert: "Discussion wasn't deleted"
+      redirect_to @discussion, alert: "Discussion wasn't deleted"
     end
   end
 
   def show
-    @project = Project.find params[:project_id]
     @discussion = Discussion.find params[:id]
+    @project = Project.find @discussion.project_id
     @comment = Comment.new
+    @comments = @discussion.comments.all
   end
 
 

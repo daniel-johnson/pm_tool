@@ -1,0 +1,12 @@
+.container
+
+  - if @comment.errors.any?
+    ul
+      - @comment.errors.full_messages.each do |msg|
+        li= msg
+
+  = form_for @comment do |f|
+    .form-group
+      = f.label :body, "Comment"
+      = f.text_area :body, class: "form-control"
+    = f.submit class: "btn btn-primary"

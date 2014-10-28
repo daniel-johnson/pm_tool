@@ -10,14 +10,16 @@ class TasksController < ApplicationController
   end
 
   def create
+    @project = Project.find params[:project_id]
     @task = Task.new task_params
+    @task.project = @project
     if @task.save
       # flash[:notice] = "Task saved successfully!"
       # redirect_to question_path(@task)
-      redirect_to @task, notice: "Task saved successfully!"
+      redirect_to @project, notice: "Task saved successfully!"
     else
       flash.now[:alert] = "Please correct errors below"
-      render :new
+      render 'projects/show'
     end
   end
 
@@ -29,7 +31,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update task_params
-      redirect_to @task, notice: "updated successfully!"
+      redirect_to @task.project
     else
       render :edit
     end
@@ -49,7 +51,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :due_date)
+    params.require(:task).permit(:title, :due_date, :done)
   end
 
 end
